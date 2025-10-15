@@ -1,0 +1,8 @@
+.card {
+    box-shadow: none;
+    background-color: #404040;
+}
+
+.country-header h3 {
+  color: var(--accent-color);
+}
