@@ -1,8 +1,34 @@
 .card {
-    box-shadow: none;
-    background-color: #404040;
+  box-shadow: none;
+  background-color: #404040;
 }
 
 .country-header h3 {
   color: var(--accent-color);
+}
+
+.big-country-card {
+  margin: 0 auto;
+  /* center it */
+  width: 95%;
+  /* take almost all space */
+  max-width: 100%;
+  /* override Bulma's card max-width */
+}
+
+.big-country-card .box {
+  background-color: #505050;
+   padding: 0.4rem 0.6rem;     /* reduce inner padding */
+  margin-bottom: 0.4rem;      /* tighter spacing between boxes */
+}
+
+@media screen and (max-width: 768px) {
+  .big-country-card {
+    width: 98%;
+    /* on mobile, stretch even more */
+    border-radius: 8px;
+    /* optional: softer corners for full-width look */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* optional: subtle shadow */
+  }
 }

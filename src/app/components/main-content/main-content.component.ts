@@ -55,6 +55,7 @@ export class MainContentComponent implements OnInit {
         }
 
         const league = f.league.name;
+        const countryFlag = f.league.flag || '';
         const key = `${country}-${league}`;
 
         if (!grouped[key]) {
@@ -63,6 +64,7 @@ export class MainContentComponent implements OnInit {
             league: league,
             expanded: false,
             fixtures: [],
+            flag: countryFlag || '/globe_icon.svg'
           };
         }
 
@@ -92,6 +94,7 @@ export class MainContentComponent implements OnInit {
             two:
               f.odds?.[0]?.bookmakers?.[0]?.bets?.[0]?.values?.[2]?.odd || '-',
           },
+          countryFlag: countryFlag
         });
       });
 

@@ -11,6 +11,7 @@ html {
 :root {
   --accent-color: rgb(0, 255, 182);
   --post-accent-color: rgb(206, 206, 206);
+  --odds-background: #505050;
 }
 
 img, svg {

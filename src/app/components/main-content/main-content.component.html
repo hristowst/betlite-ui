@@ -5,21 +5,17 @@
 
     <div *ngFor="let country of countries" class="mb-5">
       <!-- 🏆 Country + League Header -->
-      <h3
-        class="title is-6 has-text-weight-semibold mb-3 is-uppercase"
-        style="color: var(--accent-color); cursor: pointer;"
-        (click)="toggleCountry(country)"
-      >
+      <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center"
+        style="color: var(--accent-color); cursor: pointer; gap: 0.5rem;" (click)="toggleCountry(country)">
+        <img *ngIf="country.flag" [src]="country.flag" [alt]="country.name + ' flag'"
+          class="image is-24x24 mr-2" style="border-radius: 50%; object-fit: cover;" />
         {{ country.name }} - {{ country.league }}
       </h3>
 
       <!-- 📜 Fixtures List -->
       <div *ngIf="country.expanded">
-        <div
-          *ngFor="let match of country.fixtures"
-          class="box is-shadowless mb-3"
-        >
-          <div class="columns is-vcentered is-mobile">
+        <div *ngFor="let match of country.fixtures" class="box is-shadowless mb-1">
+          <div class="columns is-vcentered is-multiline">
             <!-- 🗓️ Date + Time -->
             <div class="column is-2 has-text-centered">
               <p class="has-text-weight-semibold is-size-7">{{ match.date }}</p>
@@ -29,24 +25,24 @@
             <!-- 🏳️ Teams -->
             <div class="column is-6 has-text-centered">
               <div class="is-flex is-justify-content-center is-align-items-center">
-                <img [src]="match.homeFlag" alt="flag" class="image is-24x24 mr-2 is-hidden-mobile" />
+                <img [src]="match.homeFlag" alt="flag" class="image is-24x24 mr-2" />
                 <p class="is-size-7 has-text-weight-semibold">{{ match.home }}</p>
                 <span class="mx-2 has-text-grey is-size-7">vs</span>
                 <p class="is-size-7 has-text-weight-semibold">{{ match.away }}</p>
-                <img [src]="match.awayFlag" alt="flag" class="image is-24x24 ml-2 is-hidden-mobile" />
+                <img [src]="match.awayFlag" alt="flag" class="image is-24x24 ml-2" />
               </div>
             </div>
 
             <!-- 🎲 Odds -->
-            <div class="column is-4 has-text-centered">
+            <div class="column is-4 has-text-centered odds_buttons">
               <div class="buttons is-centered">
-                <button class="button is-dark is-small" (click)="addToBetslip(match, 'one')">
-                  <strong>1</strong>&nbsp;{{ match.odds.one }}
+                <button class="button is-white is-small" (click)="addToBetslip(match, 'one')">
+                <strong>1</strong>&nbsp;{{ match.odds.one }}
                 </button>
-                <button class="button is-dark is-small" (click)="addToBetslip(match, 'draw')">
+                <button class="button is-white is-small" (click)="addToBetslip(match, 'draw')">
                   <strong>X</strong>&nbsp;{{ match.odds.draw }}
                 </button>
-                <button class="button is-dark is-small" (click)="addToBetslip(match, 'two')">
+                <button class="button is-white is-small" (click)="addToBetslip(match, 'two')">
                   <strong>2</strong>&nbsp;{{ match.odds.two }}
                 </button>
               </div>
