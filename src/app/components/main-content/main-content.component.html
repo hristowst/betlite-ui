@@ -1,7 +1,7 @@
 <!-- 🌍 Fixtures Main Card -->
 <div class="card big-country-card">
   <div class="card-content">
-    <h2 class="title is-4 mb-5">Предстоящи Мачове</h2>
+    <h2 class="title is-4 mb-5 match-date-color">Предстоящи Мачове</h2>
 
     <div *ngFor="let country of countries" class="mb-5">
       <!-- 🏆 Country + League Header -->
@@ -18,17 +18,17 @@
           <div class="columns is-vcentered is-multiline">
             <!-- 🗓️ Date + Time -->
             <div class="column is-2 has-text-centered">
-              <p class="has-text-weight-semibold is-size-7">{{ match.date }}</p>
-              <p class="is-size-7">{{ match.time }}</p>
+              <p class="has-text-weight-semibold is-size-7 match-date-color">{{ match.date }}</p>
+              <p class="is-size-7 match-date-color">{{ match.time }}</p>
             </div>
 
             <!-- 🏳️ Teams -->
             <div class="column is-6 has-text-centered">
               <div class="is-flex is-justify-content-center is-align-items-center">
                 <img [src]="match.homeFlag" alt="flag" class="image is-24x24 mr-2" />
-                <p class="is-size-7 has-text-weight-semibold">{{ match.home }}</p>
+                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ match.home }}</p>
                 <span class="mx-2 has-text-grey is-size-7">vs</span>
-                <p class="is-size-7 has-text-weight-semibold">{{ match.away }}</p>
+                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ match.away }}</p>
                 <img [src]="match.awayFlag" alt="flag" class="image is-24x24 ml-2" />
               </div>
             </div>
