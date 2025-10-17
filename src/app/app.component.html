@@ -1,18 +1,12 @@
 <app-header></app-header>
 
 <main class="section pt-3">
-  <div class="container">
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column is-two-thirds">
-        <app-main-content></app-main-content>
-      </div>
-      <div class="column">
-        <app-betslip
-  [currency]="'EUR'"
-  [minStake]="1"
-/>
-      </div>
+  <div class="columns is-gapless">
+    <div class="column is-two-thirds">
+      <app-main-content></app-main-content>
+    </div>
+    <div class="column">
+      <app-betslip [currency]="'EUR'" [minStake]="1" />
     </div>
   </div>
 </main>

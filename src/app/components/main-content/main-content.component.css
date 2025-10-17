@@ -36,3 +36,16 @@
     /* optional: subtle shadow */
   }
 }
+
+.odds_buttons .buttons {
+  display: flex;
+  flex-wrap: nowrap;         /* ❌ stop wrapping */
+  justify-content: center;   /* ✅ center horizontally */
+  align-items: center;
+  gap: 0.5rem;               /* ✅ add spacing between them */
+}
+
+.odds_buttons .button {
+  white-space: nowrap;       /* ✅ keep text on one line */
+  min-width: 50px;           /* optional: make them a bit wider */
+}
