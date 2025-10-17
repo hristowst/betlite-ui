@@ -7,8 +7,8 @@
       <!-- 🏆 Country + League Header -->
       <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center"
         style="color: var(--accent-color); cursor: pointer; gap: 0.5rem;" (click)="toggleCountry(country)">
-        <img *ngIf="country.flag" [src]="country.flag" [alt]="country.name + ' flag'"
-          class="image is-24x24 mr-2" style="border-radius: 50%; object-fit: cover;" />
+        <img *ngIf="country.flag" [src]="country.flag" [alt]="country.name + ' flag'" class="image is-24x24 mr-2"
+          style="border-radius: 50%; object-fit: cover;" />
         {{ country.name }} - {{ country.league }}
       </h3>
 
@@ -34,16 +34,16 @@
             </div>
 
             <!-- 🎲 Odds -->
-            <div class="column is-4 has-text-centered odds_buttons">
+            <div class="column is-1 has-text-centered odds_buttons">
               <div class="buttons is-centered">
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'one')">
-                <strong>1</strong>&nbsp;{{ match.odds.one }}
+                  <strong>1</strong><span class="ml-5">{{ match.odds?.one || '-' }}</span>
                 </button>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'draw')">
-                  <strong>X</strong>&nbsp;{{ match.odds.draw }}
+                  <strong>X</strong><span class="ml-5">{{ match.odds.draw }}</span>
                 </button>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'two')">
-                  <strong>2</strong>&nbsp;{{ match.odds.two }}
+                  <strong>2</strong><span class="ml-5">{{ match.odds.two }}</span>
                 </button>
               </div>
             </div>

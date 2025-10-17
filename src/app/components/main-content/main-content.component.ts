@@ -18,6 +18,7 @@ export class MainContentComponent implements OnInit {
 
   countries: any[] = [];
   private apiUrl = 'https://v3.football.api-sports.io/fixtures';
+  private oddsApiUrl = 'https://v3.football.api-sports.io/odds';
   private apiKey = '181069c8d59588ffea8d4f0d820761b2';
 
   constructor(private http: HttpClient, private betslipService: BetslipService) { }
@@ -45,7 +46,6 @@ export class MainContentComponent implements OnInit {
       this.http.get(tomorrowUrl, { headers: { 'x-apisports-key': this.apiKey } }),
     ]).subscribe(([todayRes, tomorrowRes]: any[]) => {
       const combined = [...(todayRes.response || []), ...(tomorrowRes.response || [])];
-
       const grouped: { [key: string]: any } = {};
 
       combined.forEach((f: any) => {
@@ -64,7 +64,7 @@ export class MainContentComponent implements OnInit {
             league: league,
             expanded: false,
             fixtures: [],
-            flag: countryFlag || '/globe_icon.svg'
+            flag: countryFlag || '/globe_icon.svg',
           };
         }
 
@@ -86,23 +86,14 @@ export class MainContentComponent implements OnInit {
           away: f.teams.away.name,
           homeFlag: f.teams.home.logo,
           awayFlag: f.teams.away.logo,
-          odds: {
-            one:
-              f.odds?.[0]?.bookmakers?.[0]?.bets?.[0]?.values?.[0]?.odd || '-',
-            draw:
-              f.odds?.[0]?.bookmakers?.[0]?.bets?.[0]?.values?.[1]?.odd || '-',
-            two:
-              f.odds?.[0]?.bookmakers?.[0]?.bets?.[0]?.values?.[2]?.odd || '-',
-          },
-          countryFlag: countryFlag
+          odds: null, // ❌ initially no odds loaded
+          countryFlag: countryFlag,
         });
       });
 
-      // ✅ Sort fixtures by time inside each league
+      // ✅ Sort fixtures by time
       Object.values(grouped).forEach((group: any) => {
-        group.fixtures.sort(
-          (a: any, b: any) => a.dateObj.getTime() - b.dateObj.getTime()
-        );
+        group.fixtures.sort((a: any, b: any) => a.dateObj.getTime() - b.dateObj.getTime());
       });
 
       // ✅ Convert to array & sort leagues (World first)
@@ -114,10 +105,55 @@ export class MainContentComponent implements OnInit {
     });
   }
 
+  /**
+   * 📂 Toggle dropdown and load odds if expanding for the first time
+   */
   toggleCountry(country: any) {
     country.expanded = !country.expanded;
+
+    if (country.expanded) {
+      this.loadOddsForCountry(country);
+    }
+  }
+  loadOddsForCountry(country: any) {
+    // ✅ Skip if odds already loaded
+    const allLoaded = country.fixtures.every((m: any) => m.odds !== null);
+    if (allLoaded) return;
+
+    const requests = country.fixtures.map((match: any) => {
+      const url = `${this.oddsApiUrl}?fixture=${match.id}&bookmaker=8`;
+      return this.http.get<any>(url, { headers: { 'x-apisports-key': this.apiKey } });
+    });
+
+    forkJoin<any[]>(requests).subscribe({
+      next: (oddsResponses: any[]) => {
+        console.log('📊 Odds API responses:', oddsResponses); // 👈 DEBUG HERE
+
+        oddsResponses.forEach((res, i) => {
+          const bookmakers = res?.response?.[0]?.bookmakers;
+          console.log('📦 Bookmakers for match', country.fixtures[i].id, bookmakers); // 👈 DEBUG
+
+          const oddsData = bookmakers?.[0]?.bets?.[0]?.values || [];
+
+          country.fixtures[i].odds = {
+            one: oddsData[0]?.odd || '-',
+            draw: oddsData[1]?.odd || '-',
+            two: oddsData[2]?.odd || '-',
+          };
+
+          console.log('✅ Odds set for fixture:', country.fixtures[i].id, country.fixtures[i].odds);
+        });
+      },
+      error: (err) => {
+        console.error('❌ Failed to load odds:', err);
+      },
+    });
+
   }
 
+  /**
+   * ➕ Add match to betslip
+   */
   addToBetslip(match: any, type: 'one' | 'draw' | 'two') {
     const rawOdds = match.odds?.[type];
     const parsed = parseFloat(rawOdds);
@@ -126,9 +162,9 @@ export class MainContentComponent implements OnInit {
       market: 'Match Winner',
       selection:
         type === 'one' ? match.home : type === 'two' ? match.away : 'Draw',
-      odds: isFinite(parsed) ? parsed : 1
+      odds: isFinite(parsed) ? parsed : 1,
     };
 
-    this.betslipService.addSelection(selection); // ✅ now uses the service
+    this.betslipService.addSelection(selection);
   }
 }
