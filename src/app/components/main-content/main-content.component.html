@@ -34,16 +34,19 @@
             </div>
 
             <!-- 🎲 Odds -->
-            <div class="column is-1 has-text-centered odds_buttons">
+            <div class="column has-text-centered odds_buttons">
               <div class="buttons is-centered">
+                <span>1</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'one')">
-                  <strong>1</strong><span class="ml-5">{{ match.odds?.one || '-' }}</span>
+                  <strong class="ml-5" style="color: green;">{{ match.odds?.one || '-' }}</strong>
                 </button>
+                <span>X</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'draw')">
-                  <strong>X</strong><span class="ml-5">{{ match.odds.draw }}</span>
+                  <strong class="ml-5" style="color: green;">{{ match.odds.draw }}</strong>
                 </button>
+                <span>2</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'two')">
-                  <strong>2</strong><span class="ml-5">{{ match.odds.two }}</span>
+                  <strong class="ml-5" style="color: green;">{{ match.odds.two }}</strong>
                 </button>
               </div>
             </div>
