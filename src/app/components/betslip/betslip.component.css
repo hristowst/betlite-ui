@@ -1,22 +1,47 @@
-/* 📱 Bottom banner */
+/* 📱 Bottom banner (collapsed) */
 .betslip-banner {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #363636;
-  color: #fff;
+  bottom: 1rem; /* float above edge */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff; /* white background */
+  color: #333;
   text-align: center;
-  padding: 1rem;
+  padding: 0.9rem 1.2rem;
   font-size: 1.1rem;
   font-weight: 600;
   z-index: 1000;
   cursor: pointer;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 1.5rem; /* rounded pill shape */
+  transition: background 0.2s, transform 0.2s;
 }
+
 .betslip-banner:hover {
-  background: #2c2c2c;
+  background: #f8f8f8;
+  transform: translateX(-50%) scale(1.03);
+}
+
+/* ✨ Flash animation when selection added */
+.betslip-banner.flash {
+  animation: pulseFlash 0.7s ease-in-out;
+}
+
+@keyframes pulseFlash {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+    background: #e8f5ff;
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+  }
 }
 
 /* 📱 Full-screen overlay */
