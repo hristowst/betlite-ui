@@ -13,42 +13,46 @@
 
 .big-country-card {
   margin: 0 auto;
+  /* center it */
   width: 95%;
+  /* take almost all space */
   max-width: 100%;
+  /* override Bulma's card max-width */
 }
 
 .big-country-card .box {
   background-color: #505050;
   padding: 0.4rem 0.6rem;
+  /* reduce inner padding */
   margin-bottom: 0.4rem;
+  /* tighter spacing between boxes */
 }
 
-/* 📱 Mobile adjustments */
 @media screen and (max-width: 768px) {
   .big-country-card {
-    width: 100vw; /* ✅ stretch full viewport width */
-    margin-left: -2.5vw; /* ✅ “float” slightly outside the container */
-    border-radius: 12px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* ✅ subtle floating shadow */
-  }
-
-  /* Optional: inner boxes more spaced */
-  .big-country-card .box {
-    padding: 0.6rem 0.8rem;
+    width: 98%;
+    /* on mobile, stretch even more */
     border-radius: 8px;
+    /* optional: softer corners for full-width look */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* optional: subtle shadow */
   }
 }
 
 .odds_buttons .buttons {
   display: flex;
   flex-wrap: nowrap;
+  /* ❌ stop wrapping */
   justify-content: center;
+  /* ✅ center horizontally */
   align-items: center;
   gap: 0.5rem;
+  /* ✅ add spacing between them */
 }
 
 .odds_buttons .button {
   white-space: nowrap;
+  /* ✅ keep text on one line */
   min-width: 50px;
+  /* optional: make them a bit wider */
 }
