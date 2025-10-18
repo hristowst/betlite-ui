@@ -36,15 +36,15 @@
             <!-- 🎲 Odds -->
             <div class="column odds_buttons is-4">
               <div class="buttons">
-                <span>1</span>
+                <span class="match-date-color">1</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'one')">
                   <strong style="color: green;">{{ match.odds?.one || '-' }}</strong>
                 </button>
-                <span>X</span>
+                <span class="match-date-color">X</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'draw')">
                   <strong style="color: green;">{{ match.odds.draw }}</strong>
                 </button>
-                <span>2</span>
+                <span class="match-date-color">2</span>
                 <button class="button is-white is-small" (click)="addToBetslip(match, 'two')">
                   <strong style="color: green;">{{ match.odds.two }}</strong>
                 </button>
