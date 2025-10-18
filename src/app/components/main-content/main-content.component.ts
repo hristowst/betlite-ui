@@ -49,6 +49,7 @@ export class MainContentComponent implements OnInit {
       const grouped: { [key: string]: any } = {};
 
       combined.forEach((f: any) => {
+         if (f.fixture.status.short !== 'NS') return;
         let country = f.league.country || 'World';
         if ([2, 3, 848].includes(f.league.id)) {
           country = 'World';
@@ -80,6 +81,7 @@ export class MainContentComponent implements OnInit {
           time: matchDate.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false, // ✅ 24h format
           }),
           dateObj: matchDate,
           home: f.teams.home.name,
