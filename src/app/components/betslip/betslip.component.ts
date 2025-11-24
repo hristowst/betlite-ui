@@ -1,4 +1,3 @@
-import { CommonModule, DecimalPipe, CurrencyPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,25 +5,13 @@ import {
   Input,
   Output
 } from '@angular/core';
+import { CommonModule, DecimalPipe, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Inject } from '@angular/core';
 import { BetslipService } from '../../services/betslip.service';
-
-export type BetSelection = {
-  id: string;
-  market: string;
-  selection: string;
-  odds: number;
-};
-
-export type PlaceBetPayload = {
-  selections: BetSelection[];
-  stake: number;
-  combinedOdds: number;
-  potentialReturn: number;
-};
+import { BetSelection, PlaceBetPayload } from '../../models/betslip.models';
+import { BetService } from '../../services/bet.service';
 
 @Component({
   selector: 'app-betslip',
@@ -41,6 +28,7 @@ export type PlaceBetPayload = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BetslipComponent {
+
   @Input() currency: string = 'EUR';
   @Input() minStake: number | null = null;
 
@@ -48,30 +36,41 @@ export class BetslipComponent {
   @Output() removed = new EventEmitter<string>();
   @Output() cleared = new EventEmitter<void>();
 
-  // ✅ Streams
-  selections$!: Observable<BetSelection[]>;
+  // --- Reactive State ---
+  private stakeSubject = new BehaviorSubject<number>(0);
+  stake$ = this.stakeSubject.asObservable();
+
+  selections$!: Observable<ReadonlyArray<BetSelection>>;
   combinedOdds$!: Observable<number>;
   potentialReturn$!: Observable<number>;
 
-  // ✅ UI state
-  stakeValue = 0;
+  // --- UI ---
   isExpanded = false;
-  constructor(@Inject(BetslipService) private betslipService: BetslipService) {
-    // ✅ Initialize streams here (after DI is ready)
+
+  constructor(private betslipService: BetslipService, private betService: BetService) {
+    // 💡 All initialization happens here so betslipService exists
     this.selections$ = this.betslipService.selections$;
 
     this.combinedOdds$ = this.selections$.pipe(
       map(selections =>
-        selections.reduce((prod, s) => prod * (Number(s.odds) || 1), 1)
+        selections.reduce((prod, sel) => prod * sel.odds, 1)
       )
     );
 
-    this.potentialReturn$ = this.combinedOdds$.pipe(
-      map(combined => +(this.stakeValue || 0) * combined)
+    this.potentialReturn$ = combineLatest([
+      this.stake$,
+      this.combinedOdds$
+    ]).pipe(
+      map(([stake, odds]) => +(stake * odds).toFixed(2))
     );
   }
 
-  // --- Betslip Actions ---
+  // ------------ Actions ------------
+
+  setStake(value: number): void {
+    const num = Number(value);
+    this.stakeSubject.next(num > 0 ? num : 0);
+  }
 
   removeSelection(id: string): void {
     this.betslipService.removeSelection(id);
@@ -80,42 +79,50 @@ export class BetslipComponent {
 
   clear(): void {
     this.betslipService.clear();
+    this.stakeSubject.next(0);
     this.cleared.emit();
-    this.stakeValue = 0;
   }
 
-  canPlaceBet(selections: BetSelection[]): boolean {
+  canPlaceBet(selections: ReadonlyArray<BetSelection>, stake: number): boolean {
     const hasSelections = selections.length > 0;
-    const validStake =
-      this.stakeValue > 0 &&
-      (this.minStake == null || this.stakeValue >= this.minStake);
+    const validStake = stake > 0 && (this.minStake == null || stake >= this.minStake);
     return hasSelections && validStake;
   }
 
-  normalizeStake(): void {
-    const n = Number(this.stakeValue);
-    if (!isFinite(n) || n < 0) this.stakeValue = 0;
-  }
-
-  trackById(_: number, s: BetSelection) {
-    return s.id;
-  }
-
   onPlaceBet(
-    selections: BetSelection[],
+    selections: ReadonlyArray<BetSelection>,
     combinedOdds: number,
     potentialReturn: number
   ): void {
-    if (!this.canPlaceBet(selections)) return;
-    this.placeBet.emit({
-      selections: [...selections],
-      stake: +this.stakeValue,
-      combinedOdds: +combinedOdds.toFixed(4),
-      potentialReturn: +potentialReturn.toFixed(2)
+
+    const stake = this.stakeSubject.getValue();
+    if (!this.canPlaceBet(selections, stake)) return;
+
+    const payload = {
+      stake,
+      currency: this.currency,
+      selections: selections.map(s => ({
+        matchId: s.matchId,
+        market: s.market,
+        selection: s.selection,
+        line: s.line,
+        odds: s.odds
+      }))
+    };
+
+    this.betService.placeBet('933aead6-d05c-454d-85f6-931f2bc9dd83', payload).subscribe({
+      next: (res) => {
+        console.log('Bet placed:', res);
+        this.clear();
+        alert('Bet placed successfully!');
+      },
+      error: (err) => {
+        console.error('Bet failed:', err);
+        alert(err.error?.message || 'Failed to place bet');
+      }
     });
   }
 
-  // --- Mobile expand/collapse ---
 
   toggleExpand(): void {
     this.isExpanded = !this.isExpanded;
@@ -123,5 +130,9 @@ export class BetslipComponent {
 
   close(): void {
     this.isExpanded = false;
+  }
+
+  trackById(_: number, s: BetSelection) {
+    return s.id;
   }
 }

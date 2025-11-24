@@ -5,6 +5,6 @@
     <app-main-content></app-main-content>
   </div>
   <div class="column">
-    <app-betslip [currency]="'EUR'" [minStake]="1" />
+    <app-betslip [currency]="'EUR'" [minStake]="1" (placeBet)="onPlaceBet($event)"/>
   </div>
 </div>
