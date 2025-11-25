@@ -7,41 +7,30 @@ import { BetSelection } from '../models/betslip.models';
 })
 export class BetslipService {
 
-  // --- Settings ---
   private readonly maxSelections = 20;
-  private readonly autoReplaceSameMatch = true;
 
   private selectionsSubject = new BehaviorSubject<ReadonlyArray<BetSelection>>([]);
   selections$ = this.selectionsSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   /**
-   * Attempts to add a selection and returns whether it succeeded.
+   * Adds a new selection.
+   * Enforces:
+   *   ✔ Only one selection per matchId.
+   *   ✔ Blocks exact duplicates.
    */
   addSelection(selection: BetSelection): boolean {
-    let current = this.selectionsSubject.getValue();
+    const current = this.selectionsSubject.getValue();
 
-    // 1️⃣ Block duplicate selection by ID
+    // 1️⃣ Block exact duplicate by ID
     if (current.some(s => s.id === selection.id)) {
       return false;
     }
 
-    // Extract match ID (matchId comes before "-one")
-    // Example: "12345-one"
-    const matchId = selection.id.split('-')[0];
-
-    const existingFromSameMatch = current.find(s => s.id.startsWith(matchId));
-
-    // 2️⃣ If same match but different outcome
-    if (existingFromSameMatch) {
-      if (this.autoReplaceSameMatch) {
-        // Replace old selection with new one
-        current = current.filter(s => !s.id.startsWith(matchId));
-      } else {
-        // Simply block it
-        return false;
-      }
+    // 2️⃣ Block ANY other selection from the SAME match
+    if (current.some(s => s.matchId === selection.matchId)) {
+      return false;
     }
 
     // 3️⃣ Enforce max selections
@@ -49,12 +38,14 @@ export class BetslipService {
       return false;
     }
 
-    // Push updated
+    // 4️⃣ Add selection
     this.selectionsSubject.next([...current, selection]);
-
     return true;
   }
 
+  /**
+   * Removes a selection by ID.
+   */
   removeSelection(id: string): void {
     const updated = this.selectionsSubject
       .getValue()
@@ -63,10 +54,16 @@ export class BetslipService {
     this.selectionsSubject.next(updated);
   }
 
+  /**
+   * Clears all selections.
+   */
   clear(): void {
     this.selectionsSubject.next([]);
   }
 
+  /**
+   * Returns a readonly snapshot.
+   */
   getSelections(): ReadonlyArray<BetSelection> {
     return this.selectionsSubject.getValue();
   }
