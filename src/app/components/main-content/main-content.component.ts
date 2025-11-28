@@ -14,7 +14,7 @@ import { BetSelection } from '../../models/betslip.models';
 export class MainContentComponent implements OnInit {
 
   countries: any[] = [];
-  private API = 'https://betlite-be.onrender.com/fixtures/upcoming';
+  private API = 'https://betlite-be.onrender.com/events/upcoming/football';
 
   constructor(
     private http: HttpClient,
