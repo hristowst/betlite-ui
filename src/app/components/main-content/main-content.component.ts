@@ -18,7 +18,7 @@ export class MainContentComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private betslip: BetslipService // ← inject here
+    private betslip: BetslipService
   ) { }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class MainContentComponent implements OnInit {
     const groups: Record<string, any> = {};
 
     fixtures.forEach((f) => {
+
       const key = `${f.country}-${f.leagueName}`;
 
       if (!groups[key]) {
@@ -52,18 +53,25 @@ export class MainContentComponent implements OnInit {
       const dateObj = new Date(f.startTime);
 
       groups[key].fixtures.push({
-        id: f.id,
-        home: f.homeTeamName,
-        away: f.awayTeamName,
-        homeFlag: f.homeTeamFlag,
-        awayFlag: f.awayTeamFlag,
+        id: f.eventId,
+        home: f.homeTeam,
+        away: f.awayTeam,
+
+        homeFlag: f.homeTeamLogo,
+        awayFlag: f.awayTeamLogo,
+
         dateObj,
-        date: dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        time: dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+        date: dateObj.toLocaleDateString('en-GB', {
+          day: '2-digit', month: 'short', year: 'numeric'
+        }),
+        time: dateObj.toLocaleTimeString([], {
+          hour: '2-digit', minute: '2-digit', hour12: false
+        }),
+
         odds: {
-          one: f.miniOdds?.home.toFixed(2) ?? '-',
-          draw: f.miniOdds?.draw.toFixed(2) ?? '-',
-          two: f.miniOdds?.away.toFixed(2) ?? '-',
+          one: f.matchWinnerOdds?.homeOdd ?? '-',
+          draw: f.matchWinnerOdds?.drawOdd ?? '-',
+          two: f.matchWinnerOdds?.awayOdd ?? '-',
         }
       });
     });
@@ -79,10 +87,9 @@ export class MainContentComponent implements OnInit {
 
     const selection: BetSelection = {
       id: `${match.id}-${type}`,
-
-      matchId: match.id,           // <-- REQUIRED
-      market: 'MATCH_WINNER',      // <-- canonical backend name
-      line: null,                  // <-- required by backend
+      matchId: match.id,
+      market: 'MATCH_WINNER',
+      line: null,
 
       selection:
         type === 'one' ? 'HOME' :
