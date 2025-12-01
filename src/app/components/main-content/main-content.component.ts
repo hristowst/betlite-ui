@@ -50,7 +50,13 @@ export class MainContentComponent implements OnInit {
         };
       }
 
+      // Convert startTime
       const dateObj = new Date(f.startTime);
+
+      // === EXTRACT ODDS FROM selectionRequest ===
+      const homeOdd = f.selectionRequest?.find((s: any) => s.selection === "HOME")?.odds ?? "-";
+      const drawOdd = f.selectionRequest?.find((s: any) => s.selection === "DRAW")?.odds ?? "-";
+      const awayOdd = f.selectionRequest?.find((s: any) => s.selection === "AWAY")?.odds ?? "-";
 
       groups[key].fixtures.push({
         id: f.eventId,
@@ -69,15 +75,16 @@ export class MainContentComponent implements OnInit {
         }),
 
         odds: {
-          one: f.matchWinnerOdds?.homeOdd ?? '-',
-          draw: f.matchWinnerOdds?.drawOdd ?? '-',
-          two: f.matchWinnerOdds?.awayOdd ?? '-',
+          one: homeOdd,
+          draw: drawOdd,
+          two: awayOdd,
         }
       });
     });
 
     this.countries = Object.values(groups);
   }
+
 
   toggleCountry(country: any) {
     country.expanded = !country.expanded;
