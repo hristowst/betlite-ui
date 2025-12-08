@@ -1,58 +1,77 @@
-<!-- 🌍 Fixtures Main Card -->
 <div class="card big-country-card">
   <div class="card-content">
     <h2 class="title is-4 mb-5 match-date-color">Предстоящи Мачове</h2>
 
-    <div *ngFor="let country of countries" class="mb-5">
-      <!-- 🏆 Country + League Header -->
+    <div *ngFor="let country of countries; trackBy: trackByCountry" class="mb-5">
+
+      <!-- Header -->
       <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center"
         style="color: var(--accent-color); cursor: pointer; gap: 0.5rem;" (click)="toggleCountry(country)">
-        <img *ngIf="country.flag" [src]="country.flag" [alt]="country.name + ' flag'" class="image is-24x24 mr-2"
+
+        <img *ngIf="country.flag" [src]="country.flag" class="image is-24x24 mr-2"
           style="border-radius: 50%; object-fit: cover;" />
+
         {{ country.name }} - {{ country.league }}
       </h3>
 
-      <!-- 📜 Fixtures List -->
+      <!-- Events in league -->
       <div *ngIf="country.expanded">
-        <div *ngFor="let match of country.fixtures" class="box is-shadowless mb-1">
+
+        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-1">
+
           <div class="columns is-vcentered is-multiline">
-            <!-- 🗓️ Date + Time -->
+
+            <!-- Date/time -->
             <div class="column is-2 has-text-centered">
-              <p class="has-text-weight-semibold is-size-7 match-date-color">{{ match.date }}</p>
-              <p class="is-size-7 match-date-color">{{ match.time }}</p>
+              <p class="has-text-weight-semibold is-size-7 match-date-color">{{ event.date }}</p>
+              <p class="is-size-7 match-date-color">{{ event.time }}</p>
             </div>
 
-            <!-- 🏳️ Teams -->
+            <!-- Teams -->
             <div class="column has-text-centered">
               <div class="is-flex is-justify-content-center is-align-items-center">
-                <img [src]="match.homeFlag" alt="flag" class="image is-24x24 mr-2" />
-                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ match.home }}</p>
+
+                <img [src]="event.homeFlag" class="image is-24x24 mr-2" />
+                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ event.home }}</p>
+
                 <span class="mx-2 has-text-grey is-size-7">vs</span>
-                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ match.away }}</p>
-                <img [src]="match.awayFlag" alt="flag" class="image is-24x24 ml-2" />
+
+                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ event.away }}</p>
+                <img [src]="event.awayFlag" class="image is-24x24 ml-2" />
+
               </div>
             </div>
 
-            <!-- 🎲 Odds -->
+            <!-- 1X2 odds -->
             <div class="column odds_buttons is-4">
               <div class="buttons">
-                <span class="match-date-color">1</span>
-                <button class="button is-white is-small" (click)="addToBetslip(match, 'one')">
-                  <strong style="color: green;">{{ match.odds?.one || '-' }}</strong>
-                </button>
-                <span class="match-date-color">X</span>
-                <button class="button is-white is-small" (click)="addToBetslip(match, 'draw')">
-                  <strong style="color: green;">{{ match.odds.draw }}</strong>
-                </button>
-                <span class="match-date-color">2</span>
-                <button class="button is-white is-small" (click)="addToBetslip(match, 'two')">
-                  <strong style="color: green;">{{ match.odds.two }}</strong>
-                </button>
+
+                <!-- Only MATCH_WINNER for now -->
+                <ng-container *ngIf="event.markets?.length">
+
+                  <ng-container *ngFor="let sel of event.markets[0].selections">
+                    {{ selectionLabel(sel.key) }}
+
+                    <button class="button is-white is-small" (click)="select(event, event.markets[0], sel)"
+                      [disabled]="sel.odds == null">
+
+                      <strong style="color: green;">
+                        {{ sel.odds | number:'1.2-2' }}
+                      </strong>
+                    </button>
+                  </ng-container>
+
+                </ng-container>
+
               </div>
             </div>
+
           </div>
+
         </div>
+
       </div>
     </div>
+
   </div>
 </div>

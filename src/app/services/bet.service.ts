@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class BetService {
 
-    private API = 'https://betlite-be.onrender.com/bets/place';
+    private readonly API = `${environment.apiBase}/bets/place`;
 
-    constructor(private http: HttpClient) { }
+    constructor(private readonly http: HttpClient) { }
 
     placeBet(userId: string, payload: any): Observable<any> {
         const headers = new HttpHeaders({

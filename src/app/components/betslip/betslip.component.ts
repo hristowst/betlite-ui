@@ -102,7 +102,8 @@ export class BetslipComponent {
       stake,
       currency: this.currency,
       selections: selections.map(s => ({
-        fixtureId: s.matchId,
+        eventId: s.matchId,
+        sport: s.sport, 
         market: s.market,
         selection: s.selection,
         line: s.line,

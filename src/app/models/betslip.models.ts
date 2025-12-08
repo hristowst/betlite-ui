@@ -5,6 +5,7 @@ export interface BetSelection {
   line: number | null;   // only if the market has a line
   selection: string;     // "HOME" | "DRAW" | "AWAY" | ...
   odds: number;
+  sport: string;
 }
 
 export type PlaceBetPayload = {

@@ -38,6 +38,7 @@ export class BetslipService {
       return false;
     }
 
+    console.log("selection: ", selection);
     // 4️⃣ Add selection
     this.selectionsSubject.next([...current, selection]);
     return true;
