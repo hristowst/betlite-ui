@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FootballService } from '../../services/football.service';
 import { BetSelectionFactory } from '../../services/bet-selection.factory';
 
-import { apiToDomainEvent } from '../adapters/api-to-domain.adapter';
-import { domainToViewEvent } from '../adapters/domain-to-view.adapter';
+import { apiToDomainEvent } from '../../adapters/api-to-domain.adapter';
+import { domainToViewEvent } from '../../adapters/domain-to-view.adapter';
 import { groupEvents } from '../../services/event-grouper';
 
 import { ViewEvent } from '../../models/view-event.models';
@@ -63,21 +63,6 @@ export class MainContentComponent implements OnInit {
     if (!domain) return console.warn("DomainEvent not found for:", eventView.id);
 
     this.betFactory.addFromUI(domain, market.key, sel);
-  }
-
-  populateFromServerSelections(list: any[]) {
-    const allViewEvents: ViewEvent[] =
-      this.countries.flatMap(c => c.events);
-
-    for (const serverSel of list) {
-      const view = allViewEvents.find(e => e.id === serverSel.eventId);
-      if (!view) continue;
-
-      const domain = this.domainEvents.find(d => d.id === view.id);
-      if (!domain) continue;
-
-      this.betFactory.addFromServer(domain, serverSel);
-    }
   }
 
   trackByCountry(_: number, group: any) {

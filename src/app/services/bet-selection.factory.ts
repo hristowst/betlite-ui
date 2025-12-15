@@ -11,11 +11,7 @@ export class BetSelectionFactory {
     /**
      * Create a normalized BetSelection from a domain selection.
      */
-    build(
-        event: DomainEvent,
-        marketKey: string,
-        sel: DomainSelection
-    ): BetSelection {
+    build(event: DomainEvent, marketKey: string, sel: DomainSelection): BetSelection {
 
         const id = [
             event.id,
@@ -45,22 +41,4 @@ export class BetSelectionFactory {
         if (!ok) console.warn("Selection NOT added due to conflict:", built);
     }
 
-    /**
-     * Add selection coming from server (e.g., saved betslip).
-     */
-    addFromServer(event: DomainEvent, server: {
-        market: string;
-        selection: string;
-        odds: number | string | null;
-        line: number | string | null;
-    }) {
-
-        const sel: DomainSelection = {
-            key: server.selection.toUpperCase(),
-            odds: server.odds != null ? Number(server.odds) : 0,
-            line: server.line != null ? Number(server.line) : null
-        };
-
-        this.addFromUI(event, server.market.toUpperCase(), sel);
-    }
 }
