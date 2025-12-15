@@ -1,4 +1,4 @@
-import { DomainEvent, DomainMarket, DomainSelection } from "../../models/domain-event.models";
+import { DomainEvent, DomainMarket, DomainSelection } from "../models/domain-event.models";
 
 export function apiToDomainEvent(api: any): DomainEvent {
 

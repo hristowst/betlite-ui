@@ -1,5 +1,5 @@
-import { DomainEvent } from "../../models/domain-event.models";
-import { ViewEvent } from "../../models/view-event.models";
+import { DomainEvent } from "../models/domain-event.models";
+import { ViewEvent } from "../models/view-event.models";
 
 export function domainToViewEvent(domain: DomainEvent): ViewEvent {
     const dateObj = new Date(domain.startTime);
