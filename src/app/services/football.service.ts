@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -7,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class FootballService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   /**
    * Get upcoming fixtures from backend. Backend is responsible for contacting
@@ -17,6 +18,11 @@ export class FootballService {
    */
   getUpcomingFixtures(sport: string = 'football'): Observable<any[]> {
     const url = `${environment.apiBase}/events/upcoming/${sport}`;
+    const token = this.auth.getJwt();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<any[]>(url, { headers });
+    }
     return this.http.get<any[]>(url);
   }
 

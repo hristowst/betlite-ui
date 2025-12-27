@@ -1,0 +1,11 @@
+.login-wrapper{
+  max-width:360px;
+  margin:48px auto;
+  padding:16px;
+  border:1px solid #eee;
+  border-radius:6px;
+}
+label{display:block;margin-bottom:12px}
+input{width:100%;padding:8px;margin-top:6px}
+.actions{margin-top:12px}
+.error{color:#b00020;margin-top:8px}

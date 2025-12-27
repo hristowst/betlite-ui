@@ -1,5 +1,7 @@
 export const environment = {
   production: false,
-  // Backend base URL — change per environment or use proxy in development
-  apiBase: 'http://localhost:8080'
+  apiBase: 'http://localhost:8080',
+  supabaseUrl: 'https://fhscqyikizzcdjonczln.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoc2NxeWlraXp6Y2Rqb25jemxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxODA5NjcsImV4cCI6MjA3NTc1Njk2N30.Veapr0lFdeSuHWA3WNwCM93sENeNxxi688d9bK34KxE'
 };
+

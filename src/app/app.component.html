@@ -1,10 +1,2 @@
 <app-header></app-header>
-
-<div class="columns is-gapless pt-2">
-  <div class="column is-two-thirds">
-    <app-main-content></app-main-content>
-  </div>
-  <div class="column">
-    <app-betslip [currency]="'EUR'" [minStake]="1" (placeBet)="onPlaceBet($event)"/>
-  </div>
-</div>
+<router-outlet></router-outlet>
