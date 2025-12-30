@@ -39,13 +39,8 @@ export class MainContentComponent implements OnInit {
   loadEvents() {
     this.footballService.getUpcomingFixtures().subscribe({
       next: apiList => {
-
-        // Convert API → DomainEvent
         this.domainEvents = apiList.map(apiToDomainEvent);
-
-        // Convert DomainEvent → ViewEvent
         const viewEvents: ViewEvent[] = this.domainEvents.map(domainToViewEvent);
-        // Group into leagues/countries
         this.countries = groupEvents(viewEvents);
       },
       error: err => console.error("Failed to load events:", err)
@@ -56,7 +51,6 @@ export class MainContentComponent implements OnInit {
     group.expanded = !group.expanded;
   }
 
-  /** Toggle inline markets dropdown for an event and load markets from BE if needed */
   toggleEventMarkets(eventView: any) {
     // toggle closed -> open: load markets
     eventView._marketsExpanded = !eventView._marketsExpanded;

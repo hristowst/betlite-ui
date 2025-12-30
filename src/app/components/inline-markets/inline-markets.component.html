@@ -1,23 +1,54 @@
-<div class="market-dropdown mt-2" style="padding: .5rem .75rem; background: #3b3b3b;">
-    <div *ngIf="loading">Loading markets…</div>
-    <div *ngIf="error" class="has-text-danger">{{ error }}</div>
+<div class="market-dropdown mt-2">
 
+    <!-- Loading / error -->
+    <div *ngIf="loading" class="py-3 px-3">Loading markets…</div>
+    <div *ngIf="error" class="has-text-danger py-3 px-3">{{ error }}</div>
+
+    <!-- Markets list -->
     <ng-container *ngIf="markets?.length">
-        <div *ngFor="let m of markets">
-            <h4 class="title is-size-6 has-text-weight-semibold match-date-color mb-2">{{ m.marketName || m.market }}
-            </h4>
-            <div class="columns is-mobile is-multiline odds-buttons">
-                <div *ngFor="let s of m.selections" class="column is-12-mobile is-6-tablet is-4-desktop">
-                    <button class="button is-white is-fullwidth odds-btn" (click)="onSelect(m, s, $event)">
-                        <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
-                            style="width: 100%;">
-                            <span class="odds-name">{{ s.name }}</span>
-                            <span class="odds-value" style="color:green">{{ s.odds | number:'1.2-2' }}</span>
-                        </div>
-                    </button>
+        <div *ngFor="let market of markets" class="market-card mb-3">
+
+            <!-- Card row clickable -->
+            <div class="card" (click)="$event.stopPropagation(); market._expanded = !market._expanded">
+
+                <!-- Header -->
+                <div class="card-header card-toggle" style="cursor: pointer;">
+                    <p class="card-header-title is-size-7 has-text-weight-semibold">{{ market.marketName ||
+                        market.market }}</p>
+                    <span class="card-header-icon" aria-hidden="true">
+                        <span class="icon">
+                            <span class="chev">{{ market._expanded ? '▴' : '▾' }}</span>
+                        </span>
+                    </span>
                 </div>
+
+                <!-- Market selections -->
+                <div class="card-content" *ngIf="market._expanded">
+                    <div class="content">
+                        <div class="columns is-multiline is-mobile odds-buttons">
+
+                            <div *ngFor="let sel of market.selections"
+                                class="column is-12-mobile is-6-tablet is-4-desktop">
+                                <button class="button is-white is-fullwidth odds-btn"
+                                    (click)="onSelect(market, sel, $event)">
+                                    <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
+                                        style="width:100%">
+                                        <span class="odds-name is-size-7 has-text-weight-semibold has-text-black">{{
+                                            sel.name }}</span>
+                                        <span
+                                            class="odds-value is-size-7 has-text-weight-semibold" style="color: green;">{{
+                                            sel.odds | number:'1.2-2' }}</span>
+                                    </div>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <hr />
+
         </div>
     </ng-container>
+
 </div>

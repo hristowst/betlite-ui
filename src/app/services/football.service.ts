@@ -8,14 +8,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class FootballService {
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private readonly http: HttpClient, private readonly auth: AuthService) { }
 
-  /**
-   * Get upcoming fixtures from backend. Backend is responsible for contacting
-   * third-party providers and keeping API keys secret.
-   *
-   * sport: e.g. 'football', 'basketball' — simple extensibility for other sports.
-   */
   getUpcomingFixtures(sport: string = 'football'): Observable<any[]> {
     const url = `${environment.apiBase}/events/upcoming/${sport}`;
     const token = this.auth.getJwt();
@@ -26,9 +20,6 @@ export class FootballService {
     return this.http.get<any[]>(url);
   }
 
-  /**
-   * Get detailed markets for a single event from backend
-   */
   getEventMarkets(eventId: number): Observable<any> {
     const url = `${environment.apiBase}/api/v2/odds/events/${eventId}/markets`;
     const token = this.auth.getJwt();

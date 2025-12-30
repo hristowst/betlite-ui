@@ -6,7 +6,7 @@
 
       <!-- Header -->
       <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center"
-        style="color: var(--accent-color); cursor: pointer; gap: 0.5rem;" (click)="toggleCountry(country)">
+        style="cursor: pointer;" (click)="toggleCountry(country)">
 
         <img *ngIf="country.flag" [src]="country.flag" class="image is-24x24 mr-2"
           style="border-radius: 50%; object-fit: cover;" />
@@ -51,15 +51,18 @@
                 <ng-container *ngIf="event.markets?.length">
 
                   <ng-container *ngFor="let sel of event.markets[0].selections">
-                    {{ selectionLabel(sel.key) }}
 
-                    <button class="button is-white is-small"
+                    <button class="button is-white is-small is-fullwidth"
                       (click)="select(event, event.markets[0], sel); $event.stopPropagation()"
                       [disabled]="sel.odds == null">
 
-                      <strong style="color: green;">
-                        {{ sel.odds | number:'1.2-2' }}
-                      </strong>
+                      <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
+                        style="width:100%">
+                        <span class="odds-name is-size-7 has-text-weight-semibold has-text-black">{{
+                          selectionLabel(sel.key) }}</span>
+                        <span class="odds-value is-size-7 has-text-weight-semibold" style="color: green;">{{
+                          sel.odds | number:'1.2-2' }}</span>
+                      </div>
                     </button>
                   </ng-container>
 
@@ -70,11 +73,8 @@
 
           </div>
 
-          <app-inline-markets *ngIf="event._marketsExpanded"
-            [markets]="event._markets"
-            [loading]="event._marketsLoading"
-            [error]="event._marketsError"
-            [event]="event"
+          <app-inline-markets *ngIf="event._marketsExpanded" [markets]="event._markets"
+            [loading]="event._marketsLoading" [error]="event._marketsError" [event]="event"
             (selection)="selectFromApi(event, $event.market, $event.selection)">
           </app-inline-markets>
 
