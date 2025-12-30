@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div class="columns is-gapless pt-2">
+    <div class="column is-two-thirds">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="column">
+        <app-betslip [currency]="'EUR'" [minStake]="1" />
+    </div>
+</div>
