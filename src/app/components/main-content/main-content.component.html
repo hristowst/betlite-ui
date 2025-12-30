@@ -5,7 +5,7 @@
     <div *ngFor="let country of countries; trackBy: trackByCountry" class="mb-5">
 
       <!-- Header -->
-      <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center"
+      <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center has-text-white"
         style="cursor: pointer;" (click)="toggleCountry(country)">
 
         <img *ngIf="country.flag" [src]="country.flag" class="image is-24x24 mr-2"
