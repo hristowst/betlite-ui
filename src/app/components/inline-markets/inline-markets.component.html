@@ -1,0 +1,23 @@
+<div class="market-dropdown mt-2" style="padding: .5rem .75rem; background: #3b3b3b;">
+    <div *ngIf="loading">Loading markets…</div>
+    <div *ngIf="error" class="has-text-danger">{{ error }}</div>
+
+    <ng-container *ngIf="markets?.length">
+        <div *ngFor="let m of markets">
+            <h4 class="title is-size-6 has-text-weight-semibold match-date-color mb-2">{{ m.marketName || m.market }}
+            </h4>
+            <div class="columns is-mobile is-multiline odds-buttons">
+                <div *ngFor="let s of m.selections" class="column is-12-mobile is-6-tablet is-4-desktop">
+                    <button class="button is-white is-fullwidth odds-btn" (click)="onSelect(m, s, $event)">
+                        <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
+                            style="width: 100%;">
+                            <span class="odds-name">{{ s.name }}</span>
+                            <span class="odds-value" style="color:green">{{ s.odds | number:'1.2-2' }}</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </ng-container>
+</div>

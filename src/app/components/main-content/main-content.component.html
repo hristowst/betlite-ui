@@ -17,7 +17,8 @@
       <!-- Events in league -->
       <div *ngIf="country.expanded">
 
-        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-1">
+        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-1"
+          (click)="toggleEventMarkets(event)" style="cursor: pointer;">
 
           <div class="columns is-vcentered is-multiline">
 
@@ -42,17 +43,18 @@
               </div>
             </div>
 
+
             <!-- 1X2 odds -->
             <div class="column odds_buttons is-4">
               <div class="buttons">
 
-                <!-- Only MATCH_WINNER for now -->
                 <ng-container *ngIf="event.markets?.length">
 
                   <ng-container *ngFor="let sel of event.markets[0].selections">
                     {{ selectionLabel(sel.key) }}
 
-                    <button class="button is-white is-small" (click)="select(event, event.markets[0], sel)"
+                    <button class="button is-white is-small"
+                      (click)="select(event, event.markets[0], sel); $event.stopPropagation()"
                       [disabled]="sel.odds == null">
 
                       <strong style="color: green;">
@@ -67,6 +69,14 @@
             </div>
 
           </div>
+
+          <app-inline-markets *ngIf="event._marketsExpanded"
+            [markets]="event._markets"
+            [loading]="event._marketsLoading"
+            [error]="event._marketsError"
+            [event]="event"
+            (selection)="selectFromApi(event, $event.market, $event.selection)">
+          </app-inline-markets>
 
         </div>
 

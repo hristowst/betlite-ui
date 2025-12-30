@@ -26,4 +26,17 @@ export class FootballService {
     return this.http.get<any[]>(url);
   }
 
+  /**
+   * Get detailed markets for a single event from backend
+   */
+  getEventMarkets(eventId: number): Observable<any> {
+    const url = `${environment.apiBase}/api/v2/odds/events/${eventId}/markets`;
+    const token = this.auth.getJwt();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<any>(url, { headers });
+    }
+    return this.http.get<any>(url);
+  }
+
 }
