@@ -19,7 +19,7 @@ export function domainToViewEvent(domain: DomainEvent): ViewEvent {
         countryFlag: domain.countryFlag,
 
         date: dateObj.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }),
-        time: dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        time: dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false }),
         dateObj,
 
         markets: domain.markets // ← UI gets markets already grouped

@@ -35,13 +35,4 @@ export class MyBetsComponent implements OnInit {
         this.activeTab = tab;
         tab === 'PENDING' ? this.loadPending() : this.loadSettled();
     }
-
-    combinedOdds(bet: any): number {
-        return bet.selections.reduce((prod: number, sel: any) => prod * sel.odds, 1);
-    }
-
-    // Format odds for display
-    combinedOddsDisplay(bet: any): string {
-        return this.combinedOdds(bet).toFixed(2);
-    }
 }

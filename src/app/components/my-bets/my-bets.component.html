@@ -9,15 +9,6 @@
 <!-- ===== PENDING BETS ===== -->
 <div *ngIf="activeTab === 'PENDING'">
     <div *ngFor="let bet of pendingBets" class="card has-background-white mb-4" style="width:95%; margin:auto">
-
-        <!-- Header with combined odds -->
-        <header class="card-header is-flex is-align-items-center is-justify-content-space-between">
-            <p class="card-header-title has-text-black mb-0">
-                Bet ID: {{ bet.betId }}
-            </p>
-            <span class="has-text-primary-dark mr-4">{{ combinedOddsDisplay(bet) }}</span>
-        </header>
-
         <!-- Card content: list all selections -->
         <div class="card-content">
             <div *ngFor="let sel of bet.selections" class="mb-2">
@@ -47,17 +38,6 @@
 <!-- ===== SETTLED BETS ===== -->
 <div *ngIf="activeTab === 'SETTLED'">
     <div *ngFor="let bet of settledBets" class="card has-background-white mb-4" style="width:95%; margin:auto">
-
-        <header class="card-header is-flex is-align-items-center is-justify-content-space-between">
-            <p class="card-header-title has-text-black mb-0">Bet ID: {{ bet.betId }}</p>
-            <span class="mr-4" [ngClass]="{
-              'has-text-success': bet.status === 'WON',
-              'has-text-danger': bet.status === 'LOST'
-            }">
-                {{ combinedOddsDisplay(bet) }}
-            </span>
-        </header>
-
         <div class="card-content">
             <div *ngFor="let sel of bet.selections" class="mb-2">
                 <p class="has-text-weight-semibold">{{ sel.eventName }}</p>
