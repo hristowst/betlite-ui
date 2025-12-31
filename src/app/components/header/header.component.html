@@ -5,7 +5,12 @@
     </a>
   </div>
 
-  <div class="balance has-text-white" *ngIf="auth.isAuthenticated()">
-    Balance: {{ balance }}
+  <div class="navbar-end" *ngIf="auth.isAuthenticated()">
+    <div class="navbar-item has-text-white">
+      {{ balance }}
+    </div>
+    <div class="navbar-item">
+      <a class="button is-light" routerLink="/my-bets">My Bets</a>
+    </div>
   </div>
 </nav>

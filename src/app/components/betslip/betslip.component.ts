@@ -103,7 +103,7 @@ export class BetslipComponent {
       currency: this.currency,
       selections: selections.map(s => ({
         eventId: s.matchId,
-        sport: s.sport, 
+        sport: s.sport,
         market: s.market,
         selection: s.selection,
         line: s.line,
@@ -111,7 +111,7 @@ export class BetslipComponent {
       }))
     };
 
-    this.betService.placeBet('e403ccae-b950-45c5-8f53-f3120344d242', payload).subscribe({
+    this.betService.placeBet(payload).subscribe({
       next: (res) => {
         console.log('Bet placed:', res);
         this.clear();

@@ -1,0 +1,83 @@
+<!-- Tabs Navigation -->
+<div class="tabs is-toggle is-centered mt-4">
+    <ul>
+        <li [class.is-active]="activeTab === 'PENDING'" (click)="switchTab('PENDING')"><a>Pending</a></li>
+        <li [class.is-active]="activeTab === 'SETTLED'" (click)="switchTab('SETTLED')"><a>Settled</a></li>
+    </ul>
+</div>
+
+<!-- ===== PENDING BETS ===== -->
+<div *ngIf="activeTab === 'PENDING'">
+    <div *ngFor="let bet of pendingBets" class="card has-background-white mb-4" style="width:95%; margin:auto">
+
+        <!-- Header with combined odds -->
+        <header class="card-header is-flex is-align-items-center is-justify-content-space-between">
+            <p class="card-header-title has-text-black mb-0">
+                Bet ID: {{ bet.betId }}
+            </p>
+            <span class="has-text-primary-dark mr-4">{{ combinedOddsDisplay(bet) }}</span>
+        </header>
+
+        <!-- Card content: list all selections -->
+        <div class="card-content">
+            <div *ngFor="let sel of bet.selections" class="mb-2">
+                <p class="has-text-weight-semibold">{{ sel.eventName }}</p>
+                <p>{{ sel.market }} - {{ sel.selection }} &#64; {{ sel.odds }}</p>
+            </div>
+        </div>
+
+        <!-- Footer: stake, potential win, status -->
+        <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
+            <div>
+                <p>Stake: <strong>€{{ bet.stake }}</strong></p>
+                <p>Potential Win: <strong>€{{ bet.potentialReturn }}</strong></p>
+            </div>
+
+            <span class="tag" [ngClass]="{
+              'is-info': bet.status === 'PENDING',
+              'is-success': bet.status === 'WON',
+              'is-danger': bet.status === 'LOST'
+            }">
+                {{ bet.status }}
+            </span>
+        </footer>
+    </div>
+</div>
+
+<!-- ===== SETTLED BETS ===== -->
+<div *ngIf="activeTab === 'SETTLED'">
+    <div *ngFor="let bet of settledBets" class="card has-background-white mb-4" style="width:95%; margin:auto">
+
+        <header class="card-header is-flex is-align-items-center is-justify-content-space-between">
+            <p class="card-header-title has-text-black mb-0">Bet ID: {{ bet.betId }}</p>
+            <span class="mr-4" [ngClass]="{
+              'has-text-success': bet.status === 'WON',
+              'has-text-danger': bet.status === 'LOST'
+            }">
+                {{ combinedOddsDisplay(bet) }}
+            </span>
+        </header>
+
+        <div class="card-content">
+            <div *ngFor="let sel of bet.selections" class="mb-2">
+                <p class="has-text-weight-semibold">{{ sel.eventName }}</p>
+                <p>{{ sel.market }} - {{ sel.selection }} &#64; {{ sel.odds }}</p>
+            </div>
+        </div>
+
+        <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
+            <div>
+                <p>Stake: <strong>€{{ bet.stake }}</strong></p>
+                <p>Return: <strong>€{{ bet.potentialReturn }}</strong></p>
+            </div>
+
+            <span class="tag" [ngClass]="{
+              'is-success': bet.status === 'WON',
+              'is-danger': bet.status === 'LOST'
+            }">
+                {{ bet.status }}
+            </span>
+        </footer>
+
+    </div>
+</div>
