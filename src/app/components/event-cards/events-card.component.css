@@ -1,0 +1,24 @@
+.featured-events-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+  scrollbar-width: none; /* Firefox */
+}
+.featured-events-container::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* Card sizing */
+.event-card {
+  min-width: 220px;
+  flex-shrink: 0;
+}
+
+/* Desktop: make them visible in a row without scrolling */
+@media (min-width: 1024px) {
+  .featured-events-container {
+    overflow-x: visible;
+    justify-content: center;
+  }
+}

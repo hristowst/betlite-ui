@@ -1,6 +1,14 @@
 <div class="card big-country-card">
   <div class="card-content">
-    <h2 class="title is-4 mb-5 match-date-color">Предстоящи Мачове</h2>
+    <div class="tabs is-boxed mb-4">
+      <ul>
+        <li >
+          <a>
+            <span class="is-uppercase has-text-weight-bold has-text-current">✨ Top Matches</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <div *ngFor="let country of countries; trackBy: trackByCountry" class="mb-5">
 
