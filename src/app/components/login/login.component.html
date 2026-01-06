@@ -1,5 +1,4 @@
-<div class="login-wrapper">
-  <h2>Sign in</h2>
+<div class="login-wrapper" style="background-color: #505050;">
   <form (ngSubmit)="submit()">
     <label>
       Email
@@ -11,8 +10,8 @@
       <input [(ngModel)]="password" name="password" type="password" required />
     </label>
 
-    <div class="actions">
-      <button type="submit" [disabled]="loading">{{ loading ? 'Signing in...' : 'Sign in' }}</button>
+    <div class="actions button is-success is-fullwidth">
+      <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Log in' }}</button>
     </div>
 
     <div *ngIf="error" class="error">{{ error }}</div>

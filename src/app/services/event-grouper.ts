@@ -9,25 +9,32 @@ export interface EventGroup {
     events: ViewEvent[];
 }
 
-export function groupEvents(events: ViewEvent[]): EventGroup[] {
-    const groups: Record<string, EventGroup> = {};
+export function groupEvents(events: ViewEvent[], expandCount = 3): EventGroup[] {
+    const groupsMap: Map<string, EventGroup> = new Map();
 
     for (const e of events) {
-        const key = e.leagueId ?? `${e.country}-${e.league}`;
+        const key = `${e.country}-${e.leagueId}`;
 
-        if (!groups[key]) {
-            groups[key] = {
+        if (!groupsMap.has(key)) {
+            groupsMap.set(key, {
                 name: e.country,
                 league: e.league,
                 leagueId: e.leagueId,
                 flag: e.countryFlag,
-                expanded: false,
+                expanded: false, // default collapsed
                 events: []
-            };
+            });
         }
 
-        groups[key].events.push(e);
+        groupsMap.get(key)!.events.push(e);
     }
 
-    return Object.values(groups);
+    const groups = Array.from(groupsMap.values());
+
+    // Expand only the first N groups
+    for (let i = 0; i < expandCount && i < groups.length; i++) {
+        groups[i].expanded = true;
+    }
+
+    return groups;
 }
