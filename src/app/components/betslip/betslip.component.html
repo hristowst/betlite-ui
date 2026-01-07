@@ -28,7 +28,7 @@
         <header class="is-flex is-justify-content-space-between is-align-items-center mb-3">
             <h2 class="title is-5 m-0  has-text-black">Betslip</h2>
 
-            <button class="button is-small is-light" (click)="clear()" [disabled]="(selections$ | async)?.length === 0">
+            <button class="button is-small" (click)="clear()" [disabled]="(selections$ | async)?.length === 0">
                 Clear
             </button>
         </header>
@@ -40,8 +40,10 @@
                 <div class="card-content">
                     <div class="is-flex is-justify-content-space-between is-align-items-center">
                         <div>
-                            <p class="has-text-weight-semibold has-text-black mb-1">{{ s.eventName || s.market }}</p>
-                            <p class="mb-0 has-text-grey-dark">{{ s.market }} - {{ s.selection }} &#64; {{ s.odds | number: '1.2-2' }}</p>
+                            <p class="has-text-weight-semibold has-text-black mb-1 is-size-6">{{ s.eventName || s.market
+                                }}</p>
+                            <p class="mb-0 has-text-grey-dark is-size-6">{{ s.market }} - {{ s.selection }} &#64; {{
+                                s.odds | number: '1.2-2' }}</p>
                             <p class="has-text-grey is-size-7">{{ s.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}</p>
                         </div>
 
@@ -54,7 +56,7 @@
             </div>
 
             <div>
-                <div >
+                <div>
                     <div class="columns is-mobile is-vcentered">
 
                         <!-- Left side (can be empty or labels later) -->
@@ -72,14 +74,11 @@
                                         {{ (combinedOdds$ | async) | number:'1.2-2' }}
                                     </strong>
                                 </span>
-
-                                <!-- Currency -->
-                                <span class="has-text-grey mr-1">€</span>
-
+                                <span class="has-text-warning mr-1">₮</span>
                                 <!-- Stake input -->
                                 <input id="stakeInput"
-                                    class="input is-small is-rounded has-background-light has-text-black" type="text"
-                                    inputmode="decimal" placeholder="0.00" style="width: 90px"
+                                    class="input is-small has-background-light has-text-black is-size-6"
+                                    type="text" inputmode="decimal" placeholder="0.00" style="width: 90px"
                                     [ngModel]="stake$ | async" (ngModelChange)="setStake($event)" />
 
                             </div>
@@ -92,13 +91,15 @@
                 <ng-container *ngIf="combinedOdds$ | async as combinedOdds">
                     <ng-container *ngIf="potentialReturn$ | async as potentialReturn">
                         <ng-container *ngIf="stake$ | async as stakeValue">
-                            <div >
+                            <div>
                                 <div class="has-text-grey">Potential return</div>
-                                <div class="has-text-weight-semibold has-text-grey-dark is-size-6">{{ potentialReturn | currency:
-                                    currency : 'symbol' : '1.2-2' }}</div>
+                                <div class="has-text-weight-semibold has-text-grey-dark is-size-6"><span
+                                        class="has-text-warning mr-1">₮</span>{{ potentialReturn | number:'1.2-2' }}
+                                </div>
                             </div>
 
-                            <button class="button is-primary is-fullwidth" [disabled]="!canPlaceBet(selections, stakeValue)"
+                            <button class="button is-primary is-fullwidth"
+                                [disabled]="!canPlaceBet(selections, stakeValue)"
                                 (click)="onPlaceBet(selections, combinedOdds, potentialReturn)">Place bet</button>
                         </ng-container>
                     </ng-container>
