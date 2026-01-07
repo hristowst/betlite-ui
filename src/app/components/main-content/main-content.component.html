@@ -2,9 +2,9 @@
   <div class="card-content">
     <div class="tabs is-boxed mb-4">
       <ul>
-        <li >
-          <a>
-            <span class="is-uppercase has-text-weight-bold has-text-current has-text-white">✨ Top Matches</span>
+        <li class="is-active">
+          <a class="has-background-white has-text-dark">
+            <span class="is-uppercase has-text-weight-bold">✨ Top Matches</span>
           </a>
         </li>
       </ul>
@@ -25,7 +25,7 @@
       <!-- Events in league -->
       <div *ngIf="country.expanded">
 
-        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-1"
+        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-2 m-0 p-3"
           (click)="toggleEventMarkets(event)" style="cursor: pointer;">
 
           <div class="columns is-vcentered is-multiline">
