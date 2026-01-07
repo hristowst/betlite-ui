@@ -1,4 +1,11 @@
 .bet-header {
   background-color: #027B5B;
-  /* ✅ Real Bet365-style green */
+  position: sticky;
+  /* key for sticking */
+  top: 0;
+  /* stick to top */
+  z-index: 1000;
+  /* stay above content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* optional shadow */
 }

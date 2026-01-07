@@ -32,8 +32,8 @@
         <!-- Footer: stake, potential win, status -->
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black">€{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Potential Win: <strong class="has-text-black">€{{ bet.potentialReturn
+                <p class="has-text-grey">Stake: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
+                <p class="has-text-grey">Potential Win: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn
                         }}</strong></p>
             </div>
 
@@ -74,8 +74,8 @@
 
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black">€{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Return: <strong class="has-text-black">€{{ bet.potentialReturn }}</strong></p>
+                <p class="has-text-grey">Stake: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
+                <p class="has-text-grey">Return: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn }}</strong></p>
             </div>
 
             <span class="tag" [ngClass]="{

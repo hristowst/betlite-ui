@@ -37,18 +37,18 @@
         <ng-container *ngIf="(selections$ | async) as selections; else empty">
 
             <div *ngFor="let s of selections; trackBy: trackById" class="card mb-3 has-background-white">
-                <div class="card-content">
+                <div class="card-content p-2">
                     <div class="is-flex is-justify-content-space-between is-align-items-center">
                         <div>
-                            <p class="has-text-weight-semibold has-text-black mb-1 is-size-6">{{ s.eventName || s.market
+                            <p class="has-text-weight-semibold has-text-black is-size-7">{{ s.eventName || s.market
                                 }}</p>
-                            <p class="mb-0 has-text-grey-dark is-size-6">{{ s.market }} - {{ s.selection }} &#64; {{
+                            <p class="mb-0 has-text-grey-dark is-size-7">{{ s.market }} - {{ s.selection }} &#64; {{
                                 s.odds | number: '1.2-2' }}</p>
                             <p class="has-text-grey is-size-7">{{ s.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}</p>
                         </div>
 
                         <div class="has-text-right">
-                            <button class="button is-ghost is-small mb-2" (click)="removeSelection(s.id)">✕</button>
+                            <button class="button is-ghost is-small" (click)="removeSelection(s.id)">X</button>
 
                         </div>
                     </div>
@@ -70,14 +70,14 @@
 
                                 <!-- Combined odds -->
                                 <span class="has-text-grey mr-2">
-                                    <strong class="has-text-black has-text-weight-semibold is-size-6">
+                                    <strong class="has-text-black has-text-weight-semibold is-size-7">
                                         {{ (combinedOdds$ | async) | number:'1.2-2' }}
                                     </strong>
                                 </span>
                                 <span class="has-text-warning mr-1">₮</span>
                                 <!-- Stake input -->
                                 <input id="stakeInput"
-                                    class="input is-small has-background-light has-text-black is-size-6"
+                                    class="input is-small has-background-light has-text-black is-size-7"
                                     type="text" inputmode="decimal" placeholder="0.00" style="width: 90px"
                                     [ngModel]="stake$ | async" (ngModelChange)="setStake($event)" />
 
