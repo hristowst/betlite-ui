@@ -81,7 +81,7 @@ export class MainContentComponent implements OnInit {
   }
 
   /**
-   * UI clicked a selection → we find the DomainEvent and pass it to factory
+   * UI clicked mini odds button — forward to bet factory
    */
   select(eventView: ViewEvent, market: DomainMarket, sel: DomainSelection) {
     const domain = this.domainEvents.find(d => d.id === eventView.id);

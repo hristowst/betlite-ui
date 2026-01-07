@@ -28,6 +28,10 @@ export class BetSelectionFactory {
             selection: sel.key,
             odds: sel.odds,
             line: sel.line
+            ,
+            // UI fields useful in betslip and my-bets views
+            eventName: `${event.home} vs ${event.away}`,
+            eventStartTime: new Date(event.startTime)
         };
     }
 

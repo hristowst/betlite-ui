@@ -37,7 +37,7 @@ export class BetslipComponent {
   @Output() cleared = new EventEmitter<void>();
 
   // --- Reactive State ---
-  private stakeSubject = new BehaviorSubject<number>(0);
+  private stakeSubject = new BehaviorSubject<number | null>(null);
   stake$ = this.stakeSubject.asObservable();
 
   selections$!: Observable<ReadonlyArray<BetSelection>>;
@@ -61,15 +61,22 @@ export class BetslipComponent {
       this.stake$,
       this.combinedOdds$
     ]).pipe(
-      map(([stake, odds]) => +(stake * odds).toFixed(2))
+      map(([stake, odds]) =>
+        stake ? +(stake * odds).toFixed(2) : 0
+      )
     );
   }
 
   // ------------ Actions ------------
 
-  setStake(value: number): void {
+  setStake(value: string | number | null): void {
     const num = Number(value);
-    this.stakeSubject.next(num > 0 ? num : 0);
+
+    if (value === null || value === '' || Number.isNaN(num) || num <= 0) {
+      this.stakeSubject.next(null);
+    } else {
+      this.stakeSubject.next(num);
+    }
   }
 
   removeSelection(id: string): void {
@@ -79,13 +86,17 @@ export class BetslipComponent {
 
   clear(): void {
     this.betslipService.clear();
-    this.stakeSubject.next(0);
+    this.stakeSubject.next(null);
     this.cleared.emit();
   }
 
-  canPlaceBet(selections: ReadonlyArray<BetSelection>, stake: number): boolean {
+  canPlaceBet(
+    selections: ReadonlyArray<BetSelection>,
+    stake: number | null
+  ): boolean {
     const hasSelections = selections.length > 0;
-    const validStake = stake > 0 && (this.minStake == null || stake >= this.minStake);
+    const validStake =
+      stake != null && stake > 0 && (this.minStake == null || stake >= this.minStake);
     return hasSelections && validStake;
   }
 
@@ -99,7 +110,7 @@ export class BetslipComponent {
     if (!this.canPlaceBet(selections, stake)) return;
 
     const payload = {
-      stake,
+      stake: stake!,
       currency: this.currency,
       selections: selections.map(s => ({
         eventId: s.matchId,

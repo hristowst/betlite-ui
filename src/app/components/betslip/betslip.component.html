@@ -7,7 +7,7 @@
 <div class="betslip-overlay is-hidden-desktop" *ngIf="isExpanded">
 
     <header class="betslip-header">
-        <h2>Betslip ({{ (selections$ | async)?.length || 0 }})</h2>
+        <h2>Selections ({{ (selections$ | async)?.length || 0 }})</h2>
         <button class="button is-light is-small" (click)="close()">✕ Close</button>
     </header>
 
@@ -23,107 +23,88 @@
 
 <!-- ♻ Shared Betslip Content -->
 <ng-template #fullBetslip>
-
-    <section class="box" role="region" aria-label="Betslip">
+    <section class="box has-background-light" role="region" aria-label="Betslip">
 
         <header class="is-flex is-justify-content-space-between is-align-items-center mb-3">
-            <h2 class="title is-5 m-0">Betslip</h2>
+            <h2 class="title is-5 m-0  has-text-black">Betslip</h2>
 
             <button class="button is-small is-light" (click)="clear()" [disabled]="(selections$ | async)?.length === 0">
                 Clear
             </button>
         </header>
 
-        <!-- Bets Selected -->
+        <!-- Bets Selected (card list like My Bets) -->
         <ng-container *ngIf="(selections$ | async) as selections; else empty">
 
-            <div class="table-container">
-                <table class="table is-fullwidth is-striped is-hoverable is-narrow" aria-label="Selected bets">
-                    <thead>
-                        <tr>
-                            <th>Market</th>
-                            <th>Selection</th>
-                            <th class="has-text-right">Odds</th>
-                            <th class="has-text-right" style="width: 3.5rem"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr *ngFor="let s of selections; trackBy: trackById">
-                            <td><span class="tag">{{ s.market }}</span></td>
-                            <td>{{ s.selection }}</td>
-
-                            <td class="has-text-right">
-                                {{ s.odds | number: '1.2-2' }}
-                            </td>
-
-                            <td class="has-text-right">
-                                <button class="button is-ghost is-small" (click)="removeSelection(s.id)">
-                                    ✕
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Summary -->
-            <div class="level">
-                <div class="level-left">
-
-                    <div class="level-item">
-                        <span class="has-text-grey">Selections:</span>&nbsp;
-                        <strong>{{ selections.length }}</strong>
-                    </div>
-
-                    <div class="level-item">
-                        <span class="has-text-grey">Combined odds:</span>&nbsp;
-                        <strong>{{ (combinedOdds$ | async) | number: '1.2-2' }}</strong>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Stake Input -->
-            <div class="level-right">
-                <div class="level-item is-flex is-align-items-center">
-
-                    <label for="stakeInput" class="mr-2 has-text-grey">
-                        Stake ({{ currency }}):
-                    </label>
-
-                    <input id="stakeInput" class="input is-small" type="number" min="0" step="0.01"
-                        [ngModel]="(stake$ | async) || 0" (ngModelChange)="setStake($event)" placeholder="0.00" />
-
-                </div>
-            </div>
-
-            <!-- 💰 Potential Return + Place Bet 
-           (all async values unpacked BEFORE usage) -->
-            <ng-container *ngIf="combinedOdds$ | async as combinedOdds">
-                <ng-container *ngIf="potentialReturn$ | async as potentialReturn">
-                    <ng-container *ngIf="stake$ | async as stakeValue">
-
-                        <div class="is-flex is-justify-content-space-between is-align-items-center mt-3">
-
-                            <div>
-                                <div class="has-text-grey">Potential return</div>
-
-                                <div class="is-size-5 has-text-weight-semibold">
-                                    {{ potentialReturn | currency: currency : 'symbol' : '1.2-2' }}
-                                </div>
-                            </div>
-
-                            <button class="button is-primary" [disabled]="!canPlaceBet(selections, stakeValue)"
-                                (click)="onPlaceBet(selections, combinedOdds, potentialReturn)">
-                                Place bet
-                            </button>
-
+            <div *ngFor="let s of selections; trackBy: trackById" class="card mb-3 has-background-white">
+                <div class="card-content">
+                    <div class="is-flex is-justify-content-space-between is-align-items-center">
+                        <div>
+                            <p class="has-text-weight-semibold has-text-black mb-1">{{ s.eventName || s.market }}</p>
+                            <p class="mb-0 has-text-grey-dark">{{ s.market }} - {{ s.selection }} &#64; {{ s.odds | number: '1.2-2' }}</p>
+                            <p class="has-text-grey is-size-7">{{ s.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}</p>
                         </div>
 
+                        <div class="has-text-right">
+                            <button class="button is-ghost is-small mb-2" (click)="removeSelection(s.id)">✕</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div >
+                    <div class="columns is-mobile is-vcentered">
+
+                        <!-- Left side (can be empty or labels later) -->
+                        <div class="column">
+                            <!-- optional content -->
+                        </div>
+
+                        <!-- Right side -->
+                        <div class="column is-narrow has-text-right">
+                            <div class="is-flex is-align-items-center is-justify-content-flex-end">
+
+                                <!-- Combined odds -->
+                                <span class="has-text-grey mr-2">
+                                    <strong class="has-text-black has-text-weight-semibold is-size-6">
+                                        {{ (combinedOdds$ | async) | number:'1.2-2' }}
+                                    </strong>
+                                </span>
+
+                                <!-- Currency -->
+                                <span class="has-text-grey mr-1">€</span>
+
+                                <!-- Stake input -->
+                                <input id="stakeInput"
+                                    class="input is-small is-rounded has-background-light has-text-black" type="text"
+                                    inputmode="decimal" placeholder="0.00" style="width: 90px"
+                                    [ngModel]="stake$ | async" (ngModelChange)="setStake($event)" />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <ng-container *ngIf="combinedOdds$ | async as combinedOdds">
+                    <ng-container *ngIf="potentialReturn$ | async as potentialReturn">
+                        <ng-container *ngIf="stake$ | async as stakeValue">
+                            <div >
+                                <div class="has-text-grey">Potential return</div>
+                                <div class="has-text-weight-semibold has-text-grey-dark is-size-6">{{ potentialReturn | currency:
+                                    currency : 'symbol' : '1.2-2' }}</div>
+                            </div>
+
+                            <button class="button is-primary is-fullwidth" [disabled]="!canPlaceBet(selections, stakeValue)"
+                                (click)="onPlaceBet(selections, combinedOdds, potentialReturn)">Place bet</button>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
-            </ng-container>
+            </div>
+
 
         </ng-container>
 
