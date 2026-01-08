@@ -3,8 +3,8 @@
     <div class="tabs is-boxed mb-3">
       <ul>
         <li class="is-active">
-          <a class="has-background-white has-text-dark">
-            <span class="is-uppercase has-text-weight-bold">✨ Top Matches</span>
+          <a class="has-background-white has-text-dark is-uppercase has-text-weight-bold mb-1">
+            ✨ Top Matches
           </a>
         </li>
       </ul>
@@ -13,39 +13,36 @@
     <div *ngFor="let country of countries; trackBy: trackByCountry" class="mb-5">
 
       <!-- Header -->
-      <h3 class="title is-6 has-text-weight-semibold mb-3 is-uppercase is-flex is-align-items-center has-text-white"
-        style="cursor: pointer;" (click)="toggleCountry(country)">
-
-        <img *ngIf="country.flag" [src]="country.flag" class="image is-24x24 mr-2"
-          style="border-radius: 50%; object-fit: cover;" />
-
+      <h3 class="title is-6 has-text-weight-semibold mb-2 is-uppercase is-flex is-align-items-center is-clickable">
+        <img *ngIf="country.flag" [src]="country.flag" class="image is-24x24 mr-2 rounded-flag" />
         {{ country.name }} - {{ country.league }}
       </h3>
 
       <!-- Events in league -->
       <div *ngIf="country.expanded">
 
-        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-2 m-0 p-3"
-          (click)="toggleEventMarkets(event)" style="cursor: pointer;">
+        <div *ngFor="let event of country.events; trackBy: trackByEvent" class="box is-shadowless mb-2 p-2 is-clickable"
+          (click)="toggleEventMarkets(event)">
+
 
           <div class="columns is-vcentered is-multiline">
 
             <!-- Date/time -->
-            <div class="column is-2 has-text-centered">
-              <p class="has-text-weight-semibold is-size-7 match-date-color">{{ event.date }}</p>
-              <p class="is-size-7 match-date-color">{{ event.time }}</p>
+            <div class="column is-narrow has-text-left-mobile has-text-centered-desktop">
+              <span class="has-text-weight-semibold is-size-7 match-date-color">{{ event.date }}</span>
+              <span class="is-size-7 match-date-color ml-1">{{ event.time }}</span>
             </div>
 
             <!-- Teams -->
-            <div class="column has-text-centered">
-              <div class="is-flex is-justify-content-center is-align-items-center">
+            <div class="column">
+              <div class="is-flex">
 
-                <img [src]="event.homeFlag" class="image is-24x24 mr-2" />
-                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ event.home }}</p>
+                <img [src]="event.homeFlag" class="image is-24x24 mr-1" />
+                <p class="is-size-7 has-text-weight-semibold match-date-color mt-1">{{ event.home }}</p>
 
-                <span class="mx-2 has-text-grey is-size-7">vs</span>
+                <span class="mx-2 has-text-grey is-size-7 mt-1">vs</span>
 
-                <p class="is-size-7 has-text-weight-semibold match-date-color">{{ event.away }}</p>
+                <p class="is-size-7 has-text-weight-semibold match-date-color mt-1">{{ event.away }}</p>
                 <img [src]="event.awayFlag" class="image is-24x24 ml-2" />
 
               </div>
@@ -54,7 +51,7 @@
 
             <!-- 1X2 odds -->
             <div class="column odds_buttons is-4">
-              <div class="buttons">
+              <div class="buttons is-flex-wrap-nowrap is-justify-content-space-between is-align-items-center">
 
                 <ng-container *ngIf="event.markets?.length">
 

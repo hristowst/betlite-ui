@@ -15,11 +15,11 @@
                 <div class="is-flex is-justify-content-space-between is-align-items-center">
                     <p class="has-text-weight-semibold has-text-grey mb-0">{{ sel.eventName }}</p>
                     <span class="tag" [ngClass]="{
-              'is-info': bet.status === 'PENDING',
-              'is-success': bet.status === 'WON',
-              'is-danger': bet.status === 'LOST'
+              'is-info': sel.status === 'PENDING',
+              'is-success': sel.status === 'WON',
+              'is-danger': sel.status === 'LOST'
             }">
-                        {{ bet.status }}
+                        {{ sel.status }}
                     </span>
                 </div>
                 <p>{{ sel.market }} - {{ sel.selection }} &#64; {{ sel.odds }}</p>
@@ -32,8 +32,10 @@
         <!-- Footer: stake, potential win, status -->
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Potential Win: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn
+                <p class="has-text-grey">Stake: <strong class="has-text-black"><span
+                            class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
+                <p class="has-text-grey">Potential Win: <strong class="has-text-black"><span
+                            class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn
                         }}</strong></p>
             </div>
 
@@ -56,11 +58,11 @@
                 <div class="is-flex is-justify-content-space-between is-align-items-center">
                     <p class="has-text-weight-semibold has-text-grey mb-0">{{ sel.eventName }}</p>
                     <span class="tag" [ngClass]="{
-              'is-info': bet.status === 'PENDING',
-              'is-success': bet.status === 'WON',
-              'is-danger': bet.status === 'LOST'
+              'is-info': sel.status === 'PENDING',
+              'is-success': sel.status === 'WON',
+              'is-danger': sel.status === 'LOST'
             }">
-                        {{ bet.status }}
+                        {{ sel.status }}
                     </span>
                 </div>
 
@@ -74,8 +76,10 @@
 
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Return: <strong class="has-text-black"><span class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn }}</strong></p>
+                <p class="has-text-grey">Stake: <strong class="has-text-black"><span
+                            class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
+                <p class="has-text-grey">Return: <strong class="has-text-black"><span
+                            class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn }}</strong></p>
             </div>
 
             <span class="tag" [ngClass]="{
