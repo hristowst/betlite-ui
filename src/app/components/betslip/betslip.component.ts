@@ -68,14 +68,9 @@ export class BetslipComponent {
 
   // ------------ Actions ------------
 
-  setStake(value: string | number | null): void {
-    const num = Number(value);
-
-    if (value === null || value === '' || Number.isNaN(num) || num <= 0) {
-      this.stakeSubject.next(null);
-    } else {
-      this.stakeSubject.next(num);
-    }
+  setStake(value: number) {
+    if (value == null) return;
+    this.stakeSubject.next(Math.min(Math.max(value, 0), 1000));
   }
 
   removeSelection(id: string): void {
