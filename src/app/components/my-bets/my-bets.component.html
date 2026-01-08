@@ -13,7 +13,7 @@
         <div class="card-content">
             <div *ngFor="let sel of bet.selections" class="mb-2">
                 <div class="is-flex is-justify-content-space-between is-align-items-center">
-                    <p class="has-text-weight-semibold has-text-grey mb-0">{{ sel.eventName }}</p>
+                    <p class="has-text-weight-semibold mb-0 is-size-7 has-text-dark">{{ sel.eventName }}</p>
                     <span class="tag" [ngClass]="{
               'is-info': sel.status === 'PENDING',
               'is-success': sel.status === 'WON',
@@ -22,7 +22,7 @@
                         {{ sel.status }}
                     </span>
                 </div>
-                <p>{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
+                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
                 </p>
@@ -32,9 +32,9 @@
         <!-- Footer: stake, potential win, status -->
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black"><span
-                            class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Potential Win: <strong class="has-text-black"><span
+                <p class="has-text-grey is-size-7">Stake: <strong class="has-text-black"><span
+                            class="has-text-warning mr-1 is-size-7">₮</span>{{ bet.stake }}</strong></p>
+                <p class="has-text-grey is-size-7">Potential Win: <strong class="has-text-black"><span
                             class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn
                         }}</strong></p>
             </div>
@@ -56,7 +56,7 @@
         <div class="card-content">
             <div *ngFor="let sel of bet.selections" class="mb-2">
                 <div class="is-flex is-justify-content-space-between is-align-items-center">
-                    <p class="has-text-weight-semibold has-text-grey mb-0">{{ sel.eventName }}</p>
+                    <p class="has-text-weight-semibold mb-0 is-size-7 has-text-dark">{{ sel.eventName }}</p>
                     <span class="tag" [ngClass]="{
               'is-info': sel.status === 'PENDING',
               'is-success': sel.status === 'WON',
@@ -66,7 +66,8 @@
                     </span>
                 </div>
 
-                <p>{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
+                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{
+                    sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
                 </p>
@@ -76,9 +77,9 @@
 
         <footer class="card-footer is-flex is-align-items-center is-justify-content-space-between px-4 py-3">
             <div>
-                <p class="has-text-grey">Stake: <strong class="has-text-black"><span
+                <p class="has-text-grey is-size-7">Stake: <strong class="has-text-black"><span
                             class="has-text-warning mr-1">₮</span>{{ bet.stake }}</strong></p>
-                <p class="has-text-grey">Return: <strong class="has-text-black"><span
+                <p class="has-text-grey is-size-7">Return: <strong class="has-text-black"><span
                             class="has-text-warning mr-1">₮</span>{{ bet.potentialReturn }}</strong></p>
             </div>
 

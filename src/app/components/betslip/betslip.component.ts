@@ -5,7 +5,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { CommonModule, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,8 +20,7 @@ import { BetService } from '../../services/bet.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DecimalPipe,
-    CurrencyPipe
+    DecimalPipe
   ],
   templateUrl: './betslip.component.html',
   styleUrls: ['./betslip.component.css'],
@@ -37,7 +36,7 @@ export class BetslipComponent {
   @Output() cleared = new EventEmitter<void>();
 
   // --- Reactive State ---
-  private stakeSubject = new BehaviorSubject<number | null>(null);
+  private readonly stakeSubject = new BehaviorSubject<number | null>(null);
   stake$ = this.stakeSubject.asObservable();
 
   selections$!: Observable<ReadonlyArray<BetSelection>>;
@@ -47,7 +46,7 @@ export class BetslipComponent {
   // --- UI ---
   isExpanded = false;
 
-  constructor(private betslipService: BetslipService, private betService: BetService) {
+  constructor(private readonly betslipService: BetslipService, private readonly betService: BetService) {
     // 💡 All initialization happens here so betslipService exists
     this.selections$ = this.betslipService.selections$;
 
