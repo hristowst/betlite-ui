@@ -73,7 +73,7 @@
                                     </span>
                                     <span class="has-text-warning mr-1">₮</span>
                                     <!-- Stake input -->
-                                    <input id="stakeInput" class="input has-background-light has-text-black is-small is-size-7"
+                                    <input id="stakeInput" class="input has-background-light has-text-black is-small" style="font-size: 16px;"
                                         type="number" min="0" max="1000" placeholder="0.00" [ngModel]="stake$ | async"
                                         (ngModelChange)="setStake($event)" />
                                 </div>
