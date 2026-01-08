@@ -22,7 +22,7 @@
                         {{ sel.status }}
                     </span>
                 </div>
-                <p>{{ sel.market }} - {{ sel.selection }} &#64; {{ sel.odds }}</p>
+                <p>{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
                 </p>
@@ -66,7 +66,7 @@
                     </span>
                 </div>
 
-                <p>{{ sel.market }} - {{ sel.selection }} &#64; {{ sel.odds }}</p>
+                <p>{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
                 </p>
