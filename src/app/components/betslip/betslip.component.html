@@ -62,11 +62,6 @@
                     <div>
                         <div class="columns is-mobile is-vcentered">
 
-                            <!-- Left side (can be empty or labels later) -->
-                            <div class="column">
-                                <!-- optional content -->
-                            </div>
-
                             <!-- Right side -->
                             <div class="column has-text-right">
                                 <div class="is-flex is-align-items-center is-justify-content-flex-end">
@@ -79,7 +74,7 @@
                                     </span>
                                     <span class="has-text-warning mr-1">₮</span>
                                     <!-- Stake input -->
-                                    <input id="stakeInput" class="input has-background-light has-text-black is-medium"
+                                    <input id="stakeInput" class="input has-background-light has-text-black is-small is-size-7"
                                         type="number" min="0" max="1000" placeholder="0.00" [ngModel]="stake$ | async"
                                         (ngModelChange)="setStake($event)" />
                                 </div>
