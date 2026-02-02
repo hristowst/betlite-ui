@@ -13,7 +13,8 @@
 
                 <!-- Header -->
                 <div class="card-header card-toggle" style="cursor: pointer;">
-                    <p class="card-header-title is-size-7 has-text-weight-semibold has-text-white">{{ market.marketName ||
+                    <p class="card-header-title is-size-7 has-text-weight-semibold has-text-white">{{ market.marketName
+                        ||
                         market.market }}</p>
                     <span class="card-header-icon" aria-hidden="true">
                         <span class="icon">
@@ -33,10 +34,14 @@
                                     (click)="onSelect(market, sel, $event)">
                                     <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
                                         style="width:100%">
-                                        <span class="odds-name is-size-7 has-text-weight-semibold has-text-black">{{
-                                            sel.name }}</span>
-                                        <span
-                                            class="odds-value is-size-7 has-text-weight-semibold" style="color: green;">{{
+                                        <span class="odds-name is-size-7 has-text-weight-semibold has-text-black">
+                                            {{ sel.name }}
+                                            <span *ngIf="sel.line !== null">
+                                                {{ sel.line > 0 ? '+' + sel.line : sel.line }}
+                                            </span>
+                                        </span>
+                                        <span class="odds-value is-size-7 has-text-weight-semibold"
+                                            style="color: green;">{{
                                             sel.odds | number:'1.2-2' }}</span>
                                     </div>
                                 </button>
