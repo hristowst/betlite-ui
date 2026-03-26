@@ -74,9 +74,8 @@ export class MainContentComponent implements OnInit {
   selectFromApi(eventView: ViewEvent, apiMarket: any, apiSel: any) {
     const domain = this.domainEvents.find(d => d.id === eventView.id);
     if (!domain) return console.warn('DomainEvent not found for:', eventView.id);
-
     const marketKey = apiMarket.market; // e.g. MATCH_WINNER
-    const sel = { key: apiSel.selection, odds: apiSel.odds, line: apiSel.line };
+    const sel = { key: apiSel.selection, odds: apiSel.odds, line: apiSel.line, selectionKey: apiSel.selectionKey };
     this.betFactory.addFromUI(domain, marketKey, sel as any);
   }
 

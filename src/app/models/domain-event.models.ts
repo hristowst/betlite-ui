@@ -2,6 +2,7 @@ export interface DomainSelection {
     key: string;        // HOME, AWAY, OVER, UNDER, YES, NO, etc
     odds: number;
     line: number | null;
+    selectionKey?: string;
 }
 
 export interface DomainMarket {

@@ -112,7 +112,8 @@ export class BetslipComponent {
         market: s.market,
         selection: s.selection,
         line: s.line,
-        odds: s.odds
+        odds: s.odds,
+        selectionKey: s.selectionKey
       }))
     };
 

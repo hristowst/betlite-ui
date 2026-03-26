@@ -43,7 +43,7 @@
                             <div>
                                 <p class="has-text-weight-semibold has-text-black is-size-7">{{ s.eventName || s.market
                                     }}</p>
-                                <p class="mb-0 has-text-grey-dark is-size-7">{{ s.market }} - {{ s.selection }}
+                                <p class="mb-0 has-text-grey-dark is-size-7">{{ s.market }} - {{ s.selection || s.selectionKey }}
                                     {{s.line}} &#64; {{
                                     s.odds | number: '1.2-2' }}</p>
                                 <p class="has-text-grey is-size-7">{{ s.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}

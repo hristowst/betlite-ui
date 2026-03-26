@@ -9,6 +9,7 @@ export interface BetSelection {
   // Optional UI-friendly fields populated when building a selection
   eventName?: string;          // e.g. "Home v Away"
   eventStartTime?: string | Date; // ISO string or Date for Angular date pipe
+  selectionKey?: string;
 }
 
 export type PlaceBetPayload = {

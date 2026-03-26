@@ -17,7 +17,8 @@ export class BetSelectionFactory {
             event.id,
             marketKey,
             sel.key,
-            sel.line ?? ""
+            sel.line ?? "",
+            sel.selectionKey ?? ""
         ].join("-");
 
         return {
@@ -31,7 +32,8 @@ export class BetSelectionFactory {
             ,
             // UI fields useful in betslip and my-bets views
             eventName: `${event.home} vs ${event.away}`,
-            eventStartTime: new Date(event.startTime)
+            eventStartTime: new Date(event.startTime),
+            selectionKey: sel.selectionKey
         };
     }
 
