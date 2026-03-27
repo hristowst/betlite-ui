@@ -3,6 +3,7 @@ export interface DomainSelection {
     odds: number;
     line: number | null;
     selectionKey?: string;
+    name?: string;     // e.g. "Home", "Away", "Over 2.5", "Under 2.5", "Yes", "No"
 }
 
 export interface DomainMarket {

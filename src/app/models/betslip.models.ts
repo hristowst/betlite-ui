@@ -10,6 +10,7 @@ export interface BetSelection {
   eventName?: string;          // e.g. "Home v Away"
   eventStartTime?: string | Date; // ISO string or Date for Angular date pipe
   selectionKey?: string;
+  name?: string;           // e.g. "Home", "Away", "Over 2.5", "Under 2.5", "Yes", "No"
 }
 
 export type PlaceBetPayload = {

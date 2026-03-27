@@ -28,12 +28,12 @@ export class BetSelectionFactory {
             market: marketKey,
             selection: sel.key,
             odds: sel.odds,
-            line: sel.line
-            ,
+            line: sel.line,
             // UI fields useful in betslip and my-bets views
             eventName: `${event.home} vs ${event.away}`,
             eventStartTime: new Date(event.startTime),
-            selectionKey: sel.selectionKey
+            selectionKey: sel.selectionKey,
+            name: sel.name
         };
     }
 
@@ -42,7 +42,6 @@ export class BetSelectionFactory {
      */
     addFromUI(event: DomainEvent, marketKey: string, sel: DomainSelection) {
         const built = this.build(event, marketKey, sel);
-
         const ok = this.betslip.addSelection(built);
         if (!ok) console.warn("Selection NOT added due to conflict:", built);
     }
