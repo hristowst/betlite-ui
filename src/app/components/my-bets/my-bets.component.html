@@ -22,7 +22,7 @@
                         {{ sel.status }}
                     </span>
                 </div>
-                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{ sel.odds }}</p>
+                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection || sel.selectionKey }} {{ sel.line }} &#64; {{ sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
                 </p>
@@ -66,7 +66,7 @@
                     </span>
                 </div>
 
-                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection }} {{ sel.line }} &#64; {{
+                <p class="is-size-7 has-text-grey">{{ sel.market }} - {{ sel.selection || sel.selectionKey }} {{ sel.line }} &#64; {{
                     sel.odds }}</p>
                 <p class="has-text-grey is-size-7">
                     {{ sel.eventStartTime | date: 'dd MMM yyyy, HH:mm' }}
