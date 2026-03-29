@@ -4,48 +4,68 @@
     <div *ngIf="loading" class="py-3 px-3">Loading markets…</div>
     <div *ngIf="error" class="has-text-danger py-3 px-3">{{ error }}</div>
 
-    <!-- Markets list -->
-    <ng-container *ngIf="markets?.length">
-        <div *ngFor="let market of markets" class="market-card mb-3">
+    <!-- Tabs -->
+    <div class="tabs-wrapper py-3" *ngIf="groups.length">
+        <div class="tabs is-toggle is-toggle-rounded">
+            <ul>
+                <li *ngFor="let g of groups" [class.is-active]="g.key === activeGroup" (click)="setActive(g.key)">
+                    <a>
+                        <span>{{ g.name }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-            <!-- Card row clickable -->
-            <div class="card" (click)="$event.stopPropagation(); market._expanded = !market._expanded">
+    <!-- Markets -->
+    <ng-container *ngIf="groupedMarkets[activeGroup]?.length">
+        <div *ngFor="let market of groupedMarkets[activeGroup]" class="market-card mb-3">
 
-                <!-- Header -->
-                <div class="card-header card-toggle" style="cursor: pointer;">
-                    <p class="card-header-title is-size-7 has-text-weight-semibold has-text-white">{{ market.marketName
-                        ||
-                        market.market }}</p>
-                    <span class="card-header-icon" aria-hidden="true">
+            <div class="card">
+
+                <!-- HEADER -->
+                <div class="card-header" (click)="toggleMarket(market, $event)" style="cursor: pointer;">
+
+                    <p class="card-header-title is-size-7 has-text-weight-semibold has-text-white">
+                        {{ market.marketName || market.market }}
+                    </p>
+
+                    <span class="card-header-icon">
                         <span class="icon">
                             <span class="chev">{{ market._expanded ? '▴' : '▾' }}</span>
                         </span>
                     </span>
                 </div>
 
-                <!-- Market selections -->
+                <!-- CONTENT -->
                 <div class="card-content" *ngIf="market._expanded">
-                    <div class="content">
-                        <div class="columns is-multiline is-mobile odds-buttons">
 
-                            <div *ngFor="let sel of market.selections"
-                                class="column is-12-mobile is-6-tablet is-4-desktop">
-                                <button class="button is-white is-fullwidth odds-btn"
-                                    (click)="onSelect(market, sel, $event)">
-                                    <div class="odds-content is-flex is-justify-content-space-between is-align-items-center"
-                                        style="width:100%">
-                                        <span class="odds-name is-size-7 has-text-weight-semibold has-text-black">
-                                            {{ sel.name }} {{ sel.line }}
-                                        </span>
-                                        <span class="odds-value is-size-7 has-text-weight-semibold"
-                                            style="color: green;">{{
-                                            sel.odds | number:'1.2-2' }}</span>
-                                    </div>
-                                </button>
-                            </div>
+                    <div class="columns is-multiline is-mobile odds-buttons">
+
+                        <div *ngFor="let sel of market.selections" class="column is-12-mobile is-6-tablet is-4-desktop">
+
+                            <button class="button is-white is-fullwidth odds-btn"
+                                (click)="onSelect(market, sel, $event)">
+
+                                <div class="is-flex is-justify-content-space-between is-align-items-center"
+                                    style="width:100%">
+
+                                    <span class="is-size-7 has-text-weight-semibold has-text-black">
+                                        {{ sel.name }} {{ sel.line }}
+                                    </span>
+
+                                    <span class="is-size-7 has-text-weight-semibold" style="color: green;">
+                                        {{ sel.odds | number:'1.2-2' }}
+                                    </span>
+
+                                </div>
+
+                            </button>
 
                         </div>
+
                     </div>
+
                 </div>
 
             </div>
