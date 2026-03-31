@@ -6,7 +6,7 @@
 
     <!-- Tabs -->
     <div class="tabs-wrapper py-3" *ngIf="groups.length">
-        <div class="tabs is-toggle is-toggle-rounded">
+        <div class="tabs is-toggle is-toggle-rounded is-small">
             <ul>
                 <li *ngFor="let g of groups" [class.is-active]="g.key === activeGroup" (click)="setActive(g.key)">
                     <a>
